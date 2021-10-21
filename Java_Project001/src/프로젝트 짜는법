@@ -1,0 +1,36 @@
+member board;
+ 1. 패키지 구성	
+MVC패턴 : 역할 분담된 클래스
+	* MVC패턴 M(model) : data	
+		  V(view) : front
+		  C(control) : m < 제어> v
+		  * Database : DB, File
+
+2. 클래스 구성 (Data, M, C : 백엔드 / V : 프론트엔드)
+	- Data : file
+
+	- M : Member, Board, Reply
+	
+	- C : MemberController, BoardController, Replycontroller
+	
+	- V : Application(mainMenu, memberMenu, boardMenu)
+		메인메뉴에서 멤버컨트롤러를 통해서 데이타 파일이 있느지 없는지 확인
+
+3. 클래스 설계 [필드, 생성자, 메소드]
+	* Member
+		필드 : field : id, password, name, email, point
+		생성자 : 빈 생성자1, 전체 생성자1
+		메소드 : getter, setter
+
+	* File(파일처리)
+		필드 : filepath
+		메소드 : save, load 메소드 
+
+	* MemberController
+		필드 : (배열 or 컬렉션) Arraylist<Member> memberlist
+		메소드 : login, signup, forgotid, forgotpassword, logout, info, update, delete
+
+[코드]
+1. JAVA 새프로젝트 생성 [JDK1.8]
+2. 패키지 구성
+3. 
