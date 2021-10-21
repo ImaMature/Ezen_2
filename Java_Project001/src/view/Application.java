@@ -11,8 +11,8 @@ public class Application {
 	
 	//0. 설정 
 	public static Scanner scanner = new Scanner(System.in);
-		// main 밖에 만드는 이유? : static 메모리 영역에 생성해서 다른 클래스에서도 자유롭게 쓸 수 있게 만들기 위해서 
-		// public ? 자유롭게 접근할 수 있도록 하기 위해 public 사용.
+		// main 밖에 만드는 이유? : 메모리 영역에 객체를 생성해서 다른 클래스에서도 자유롭게 쓸 수 있게 만들기 위해서 
+		// public ? 모든 클래스가 자유롭게 접근할 수 있도록 하기 위해 public 사용.
 	public static void main(String[] args) {
 		File.fileload(1);
 
@@ -62,6 +62,8 @@ public class Application {
 						System.out.println("[알림] : 회원가입 실패");
 					}
 					//2. 없다면? 
+//					MemberController memberController = new MemberController();
+//					memberController.signup(member);
 					
 				}
 				else if(ch==3) {
