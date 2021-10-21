@@ -121,8 +121,8 @@ public class MemberController {
 		//2) 현재 프로젝트에 라이브러리 등록
 		
 		//설정 [ 보내는 사람 아이디, 비밀번호, 메일회사의 호스트 ]
-		String fromemail = "보내는사람이메일@naver.com";
-		String frompassword = "패스워드";
+		String fromemail = "";
+		String frompassword = "";
 		
 		//smtp : 간이 우편 전송 프로토콜
 		//pop3 : 받을 때 프로토콜
