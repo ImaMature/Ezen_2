@@ -3,6 +3,7 @@ package view;
 import java.util.Scanner;
 
 import controller.MemberController;
+import database.File;
 import model.Member;
 
 public class Application {
@@ -13,6 +14,8 @@ public class Application {
 		// main 밖에 만드는 이유? : static 메모리 영역에 생성해서 다른 클래스에서도 자유롭게 쓸 수 있게 만들기 위해서 
 		// public ? 자유롭게 접근할 수 있도록 하기 위해 public 사용.
 	public static void main(String[] args) {
+		File.fileload(1);
+		
 		mainmenu(); // 메인메뉴 메소드 호출
 	}
 	

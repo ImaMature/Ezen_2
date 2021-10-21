@@ -44,7 +44,7 @@ public class MemberController {
 		memberList.add(member);
 		
 		// 4. 파일 처리
-		File.filesave(1); // type으로 제어해서 구분하겠다는 것
+		File.filesave(1); // 1을 넣은 이유는 type으로 제어해서 구분하겠다는 것
 		
 		return true; //회원가입 성공시
 	}
