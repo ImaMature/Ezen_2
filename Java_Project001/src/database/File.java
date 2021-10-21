@@ -12,7 +12,7 @@ public class File {
 
 	//필드
 	private static String memberpath =
-			"D:/work0928/Java_Project001/src/database/memberlist.txt";
+			"C:/Users/505/git/Ezen_2/Java_Project001/src/database/memberlist.txt";
 	
 	//저장하기 메소드
 	public static boolean filesave (int type) { //[파일 관리하는 메소드] 여러개의 메소드가 아닌 하나의 메소드로 관리하는 방법
@@ -80,20 +80,15 @@ public class File {
 					//9. 각 객체를 리스트에 저장
 					MemberController.memberList.add(member);
 				}
-				
 				fileInputStream.close(); // 스트림 닫기
 				return true; // 리턴값 출력
 			}
-			if(type == 2) {
-				
-			}if(type == 3) {
-				
+			 if(type == 2) {}
+			 if(type == 3) {}
 			}
-		}
-		catch (Exception e) {
-			System.out.println("[알림] : 파일 저장 오류 발생 [ 관리자에게 문의 ]");
-		}
-		return true; // 파일 불러오기 성공시
-		
+			catch (Exception e) {
+				System.out.println("[알림] : 파일 저장 오류 발생 [ 관리자에게 문의 ]");	
+			}
+			return false; // 파일 불러오기 성공시
 	}
 }

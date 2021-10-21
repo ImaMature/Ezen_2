@@ -15,7 +15,7 @@ public class Application {
 		// public ? 자유롭게 접근할 수 있도록 하기 위해 public 사용.
 	public static void main(String[] args) {
 		File.fileload(1);
-		
+
 		mainmenu(); // 메인메뉴 메소드 호출
 	}
 	
@@ -27,7 +27,20 @@ public class Application {
 				System.out.println("1. 로그인 2. 회원가입 3. 아이디 찾기 4. 비밀번호 찾기");
 				System.out.println("\t\t 선택 : ");	int ch =scanner.nextInt();
 				
-				if(ch==1) {System.out.println("***************** 로그인 페이지 *****************");}
+				if(ch==1) {System.out.println("***************** 로그인 페이지 *****************");
+					System.out.println("ID : ");		String id = scanner.next();
+					System.out.println("Password : ");	String password = scanner.next();
+					
+					boolean result = MemberController.login(id, password);
+					if(result) { // 로그인 성공 시
+						System.out.println("[알림] : 로그인 성공");
+						membermenu(id); // 회원메뉴 메소드 호출 (로그인 성공한 아이디를 인수로 전달)
+						
+					}else {
+						System.out.println("[알림] : 로그인 실패 ( 동일한 회원정보가 없습니다.)");
+					}
+				
+				}
 				else if(ch==2) {System.out.println("**************** 회원가입 페이지 *****************");
 				//입력 받기 -> 변수 저장 -> 변수가 여러개 -> 객체생성 -> 객체 여러개 -> 배열/컬렉션 담는다
 					System.out.println("ID [4글자 이상] : ");		String id = scanner.next();
@@ -51,9 +64,28 @@ public class Application {
 					//2. 없다면? 
 					
 				}
-				else if(ch==3) {System.out.println("*************** 아이디 찾기 페이지 ***************");}
-				else if(ch==4) {System.out.println("************** 비밀번호 찾기 페이지 ***************");}
-				else {}
+				else if(ch==3) {
+					System.out.println("*************** 아이디 찾기 페이지 ***************");
+					System.out.println("Name : ");		String name = scanner.next();
+					System.out.println("Email : ");		String email = scanner.next();
+					
+					boolean result = MemberController.forgotid(name, email);
+					if(result) {
+						System.out.println("[알림] : 회원님의 아이디를 이메일로 전송했습니다.");
+					}
+					else {System.out.println("[알림] : 동일한 회원정보가 없습니다.");}
+				}
+				else if(ch==4) {
+					System.out.println("************** 비밀번호 찾기 페이지 ***************");
+					System.out.println("ID : ");		String id = scanner.next();
+					System.out.println("Email : ");		String email = scanner.next();
+					boolean result = MemberController.forgotpassword(id, email);
+					if(result) {
+						System.out.println("[알림] : 회원님의 비밀번호를 이메일로 전송했습니다.");
+					}
+					else {System.out.println("[알림] : 동일한 회원정보가 없습니다.");}
+					}
+				else {System.out.println("알림. 알 수 없는 행동입니다.");}
 			}
 			catch(Exception e) {
 				System.err.println("알림 : 메뉴 페이지 오류 [관리자 문의]"); //err.print 빨간 글씨화(에러 표시하는것)

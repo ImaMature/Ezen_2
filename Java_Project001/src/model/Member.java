@@ -12,9 +12,9 @@ public class Member {
 	private String email;
 	private int point;
 	
+	public Member() {}
 	
 	public Member(String id, String password, String name, String email, int point) {
-		super();
 		this.id = id;
 		this.password = password;
 		this.name = name;

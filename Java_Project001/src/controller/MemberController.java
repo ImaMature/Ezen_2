@@ -15,6 +15,7 @@ public class MemberController {
 	public static boolean signup(Member member) { //static이면 입력받을 매개변수 괄호안에 넣어야됨
 		//반환타입 :  
 		
+		
 		// 1. 유효성 검사 //회원가입 안되는 경우
 		if (member.getId().length() < 4) {
 			System.out.println("[알림] : ID는 4글자 이상만 가능합니다.");
@@ -50,22 +51,39 @@ public class MemberController {
 	}
 	
 		//로그인 : 
-	public boolean login(String id, String password) {
-		
-		return true; //로그인 성공시
+	public static boolean login(String id, String password) {
+		for(Member member : memberList) {
+			if ( member.getId().equals(id) && 
+					member.getPassword().equals(password)) {
+				return true;//로그인 성공시
+			}
+		}
+		return false; // 로그인 실패시
 	}
 	
 		//아이디 찾기 [ 아이디, 이메일 ] [이름과 이메일을 인수로 받아 해당 메일에 아이디 전송]
-	public boolean forgotid(String name, String email) {
-		return true; //아이디 찾기 성공시
+	public static boolean forgotid(String name, String email) {
+		for(Member member : memberList) {
+			if(member.getName().equals(name) && 
+					member.getEmail().equals(email)) {
+				return true; //아이디 찾기 성공시
+			}
+		}
+		return false; //아이디 찾기 실패시
 	}
 	
 		//비번 찾기 [아이디와 이메일을 인수로 받아 해당 메일에 비밀번호 전송 ]
-	public boolean forgotpassword(String id, String email) {
-		return true; //비밀번호 찾기 성공시
+	public static boolean forgotpassword(String id, String email) {
+		for(Member member : memberList) {
+			if(member.getId().equals(id) && 
+					member.getEmail().equals(email)) {
+				return true; //아이디 찾기 성공시
+			}
+		}
+		return false; //아이디 찾기 실패시
 	}
 	
-		//회원정보 [아이디르 인수로 받아 해당 아이디의 모든 정보 반환 ]
+		//회원정보 [아이디를 인수로 받아 해당 아이디의 모든 정보 반환 ]
 	public Member info(String loginid) {
 		Member member = null;
 		return member;
