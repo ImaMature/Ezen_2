@@ -38,6 +38,9 @@ public class File {
 			
 			return true; //파일처리 성공
 			}
+			if(type==2) {}
+			if(type==3) {}
+			
 		}catch (Exception e) {
 			System.out.println("[알림] : 파일 저장 오류 발생 [ 관리자에게 문의 ]");
 		}

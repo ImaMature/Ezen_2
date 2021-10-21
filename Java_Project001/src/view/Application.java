@@ -32,6 +32,7 @@ public class Application {
 					System.out.println("Password : ");	String password = scanner.next();
 					
 					boolean result = MemberController.login(id, password);
+					
 					if(result) { // 로그인 성공 시
 						System.out.println("[알림] : 로그인 성공");
 						membermenu(id); // 회원메뉴 메소드 호출 (로그인 성공한 아이디를 인수로 전달)
@@ -61,6 +62,7 @@ public class Application {
 					}else {
 						System.out.println("[알림] : 회원가입 실패");
 					}
+					System.out.println("**********************************************");
 					//2. 없다면? 
 //					MemberController memberController = new MemberController();
 //					memberController.signup(member);
@@ -72,22 +74,32 @@ public class Application {
 					System.out.println("Email : ");		String email = scanner.next();
 					
 					boolean result = MemberController.forgotid(name, email);
+					
 					if(result) {
-						System.out.println("[알림] : 회원님의 아이디를 이메일로 전송했습니다.");
+						System.err.println("[알림] : 회원님의 아이디를 이메일로 전송했습니다.");
 					}
-					else {System.out.println("[알림] : 동일한 회원정보가 없습니다.");}
+					else {
+						System.err.println("[알림] : 동일한 회원정보가 없습니다.");
+					}
+					System.out.println("**********************************************");
 				}
 				else if(ch==4) {
 					System.out.println("************** 비밀번호 찾기 페이지 ***************");
 					System.out.println("ID : ");		String id = scanner.next();
 					System.out.println("Email : ");		String email = scanner.next();
+					
 					boolean result = MemberController.forgotpassword(id, email);
+					
 					if(result) {
-						System.out.println("[알림] : 회원님의 비밀번호를 이메일로 전송했습니다.");
+						System.err.println("[알림] : 회원님의 비밀번호를 이메일로 전송했습니다.");
+					}else {
+						System.err.println("[알림] : 동일한 회원정보가 없습니다.");
 					}
-					else {System.out.println("[알림] : 동일한 회원정보가 없습니다.");}
-					}
-				else {System.out.println("알림. 알 수 없는 행동입니다.");}
+					System.out.println("**********************************************");
+				}	
+				else {
+					System.err.println("알림. 알 수 없는 행동입니다.");
+				}
 			}
 			catch(Exception e) {
 				System.err.println("알림 : 메뉴 페이지 오류 [관리자 문의]"); //err.print 빨간 글씨화(에러 표시하는것)
