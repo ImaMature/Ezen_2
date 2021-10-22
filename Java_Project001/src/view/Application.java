@@ -3,8 +3,11 @@ package view;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
+import javax.swing.RepaintManager;
+
 import controller.BoardController;
 import controller.MemberController;
+import controller.ReplyController;
 import database.File;
 import model.Board;
 import model.Member;
@@ -173,7 +176,7 @@ public class Application {
 						scanner.nextLine(); //next다음에 nextLine오는경우
 					System.out.println(" 제목 : ");	String title = scanner.nextLine();
 					System.out.println(" 내용 : ");	String contents = scanner.nextLine();	
-					
+					//객체화
 					Board board = new Board(title, contents, id);
 					BoardController.add(board);
 					
@@ -194,11 +197,37 @@ public class Application {
 						System.out.println(" 조회수 : " + board.getView());
 						System.out.println("\n********************* 댓글 **********************");
 						System.out.println("작성자\t댓글\t\t작성일");
+						
+						//댓글 ㄹ출력
 						for(Reply reply : board.getReplylist()) {
-							System.out.println("작성자\t댓글내용\t\t작성일");
+							
+							System.out.println(reply.getWriter() + "\t" + reply.getContents() +"\t\t" + 
+												reply.getDate());
 							
 						}
-						System.out.println("1. 댓글쓰기"); int ch2 = scanner.nextInt();
+						System.out.println("*************************************************");
+						
+						System.out.print("1. 댓글쓰기 | 2. 뒤로가기"); 
+						if(board.getWriter().equals(id)) { // 게시물 작성자 == 로그인 된 id
+							System.out.print(" 3. 게시물 삭제 | 4. 게시물 수정");
+						}
+						
+						int ch2 = scanner.nextInt();
+						if( ch2 == 1) {
+							//댓글 쓰기
+							scanner.nextLine();			
+							System.out.println("댓글내용 : "); String contents = scanner.nextLine();
+																		// nextLine()? 띄어쓰기 있을 수 있으니까
+							Reply reply = new Reply(contents, id);
+							boolean result = ReplyController.add(index-1, reply);
+							if(result) {
+								System.out.println("[댓글 등록.]");
+								
+							}else {
+								System.err.println("[알림] 해당 게시물 번호가 존재하지 않습니다.");
+							}
+							
+						}
 					}
 					
 				return; //전체 메소드 리턴[반환] 끝내기

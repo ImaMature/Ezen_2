@@ -34,12 +34,14 @@ public class Board {
 		this.replylist = new ArrayList<>(); 
 	}
 	
+	//파일 로드시 사용하는 생성자
 	public Board(String title, String contents, String writer, String date, int view) {
 		this.title = title;
 		this.contents = contents;
 		this.writer = writer;
 		this.date = date;
 		this.view = view;
+		this.replylist = new ArrayList<Reply>(); //reply에도 메모리 할당 해야됨. 그래야 불러올 수 있음
 	}
 	
 	public String getTitle() {
