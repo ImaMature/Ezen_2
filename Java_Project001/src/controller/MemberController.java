@@ -56,7 +56,12 @@ public class MemberController {
 		
 		// 4. 파일 처리
 		File.filesave(1); // 1을 넣은 이유는 type으로 제어해서 구분하겠다는 것
+		//File file = new File();
+		//file.filesave(1);
 		
+		
+		// 5. 가입메일 전송 
+		sendmail(member.getEmail(), 3, "" );
 		return true; //회원가입 성공시
 	}
 	
@@ -91,6 +96,8 @@ public class MemberController {
 		for(Member member : memberList) {
 			if(member.getId().equals(id) && 
 					member.getEmail().equals(email)) {
+				
+				sendmail(member.getEmail(), 2, member.getPassword());
 				return true; //아이디 찾기 성공시
 			}
 		}
@@ -121,8 +128,8 @@ public class MemberController {
 		//2) 현재 프로젝트에 라이브러리 등록
 		
 		//설정 [ 보내는 사람 아이디, 비밀번호, 메일회사의 호스트 ]
-		String fromemail = "";
-		String frompassword = "";
+		String fromemail = "aaa.com";
+		String frompassword = "asdf123";
 		
 		//smtp : 간이 우편 전송 프로토콜
 		//pop3 : 받을 때 프로토콜
@@ -174,6 +181,6 @@ public class MemberController {
 		}
 		catch(Exception e) {
 			System.err.println("[알림] : 메일전송 실패 [관리자에게 문의]" + e);
-			}
+		}
 	}	
 }

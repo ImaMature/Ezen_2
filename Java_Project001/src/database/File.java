@@ -2,17 +2,23 @@ package database;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import controller.MemberController;
-import model.Member;
 
+import controller.BoardController;
+import controller.MemberController;
+import model.Board;
+import model.Member;
 
 
 
 public class File {
 
-	//필드
+	// 1. 회원정보를 저장하는 파일의 경로 
 	private static String memberpath =
 			"C:/Users/505/git/Ezen_2/Java_Project001/src/database/memberlist.txt";
+	
+	// 2. 게시물를 저장하는 파일의 경로
+	private static String boardpath =
+			"C:/Users/505/git/Ezen_2/Java_Project001/src/database/boardlist.txt";
 	
 	//저장하기 메소드
 	public static boolean filesave (int type) { //[파일 관리하는 메소드] 여러개의 메소드가 아닌 하나의 메소드로 관리하는 방법
@@ -38,13 +44,24 @@ public class File {
 			
 			return true; //파일처리 성공
 			}
-			if(type==2) {}
+			if(type==2) {
+				fileOutputStream = new FileOutputStream( boardpath );
+				for( Board board : BoardController.boardlist ) {
+					String outstring = board.getTitle()+","+board.getContents()+","+
+										board.getWriter()+","+board.getDate()+","+
+										board.getView()+"\n";
+					fileOutputStream.write( outstring.getBytes() );
+				}
+				fileOutputStream.flush();
+				fileOutputStream.close(); 
+				return true;
+			}
 			if(type==3) {}
 			
 		}catch (Exception e) {
 			System.out.println("[알림] : 파일 저장 오류 발생 [ 관리자에게 문의 ]");
 		}
-		return false;
+		return false; // 파일 처리 실패
 	}
 	//불러오기 메소드
 	public static boolean fileload(int type) {
@@ -86,7 +103,22 @@ public class File {
 				fileInputStream.close(); // 스트림 닫기
 				return true; // 리턴값 출력
 			}
-			 if(type == 2) {}
+			 if(type == 2) {
+				 fileInputStream = new FileInputStream(boardpath); // 1. 파일경로 
+					byte[] bytes = new byte[10000]; // 10kb 정도 // 2. 파일용량 
+					fileInputStream.read( bytes );	// 3. 파일 읽기 
+					String instring = new String(bytes); // 4. 문자열 변환 
+					String[] boards = instring.split("\n"); // 5. 게시물 \n 구분 
+					
+					for( int i = 0 ; i<boards.length-1 ;i++ ) { //6.  -1 : 마지막 게시물 제외
+						String[] field = boards[i].split(",");
+						Board board = new Board( field[0] , field[1] , field[2], 
+										field[3]  , Integer.parseInt(field[4]));
+						BoardController.boardlist.add(board);
+						}
+					fileInputStream.close();
+					return true;
+			 }
 			 if(type == 3) {}
 			}
 			catch (Exception e) {

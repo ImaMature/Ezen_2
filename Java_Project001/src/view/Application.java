@@ -1,10 +1,14 @@
 package view;
 
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
+import controller.BoardController;
 import controller.MemberController;
 import database.File;
+import model.Board;
 import model.Member;
+import model.Reply;
 
 public class Application {
 // Scanner 여기에
@@ -14,8 +18,11 @@ public class Application {
 		// main 밖에 만드는 이유? : 메모리 영역에 객체를 생성해서 다른 클래스에서도 자유롭게 쓸 수 있게 만들기 위해서 
 		// public ? 모든 클래스가 자유롭게 접근할 수 있도록 하기 위해 public 사용.
 	public static void main(String[] args) {
-		File.fileload(1);
-
+		//0.프로그램 파일로딩
+		File.fileload(1); //회원 파일 불러오기
+		File.fileload(2); //게시물 파일불러오기
+		
+		//1.프로그램시작
 		mainmenu(); // 메인메뉴 메소드 호출
 	}
 	
@@ -25,7 +32,7 @@ public class Application {
 			try {
 				System.out.println("\n**************** 회원 커뮤니티 ********************");
 				System.out.println("1. 로그인 2. 회원가입 3. 아이디 찾기 4. 비밀번호 찾기");
-				System.out.println("\t\t 선택 : ");	int ch =scanner.nextInt();
+				System.out.println("\t 선택 : ");	int ch =scanner.nextInt();
 				
 				if(ch==1) {System.out.println("***************** 로그인 페이지 *****************");
 					System.out.println("ID : ");		String id = scanner.next();
@@ -34,11 +41,11 @@ public class Application {
 					boolean result = MemberController.login(id, password);
 					
 					if(result) { // 로그인 성공 시
-						System.out.println("[알림] : 로그인 성공");
+						System.err.println("[알림] : 로그인 성공");
 						membermenu(id); // 회원메뉴 메소드 호출 (로그인 성공한 아이디를 인수로 전달)
 						
 					}else {
-						System.out.println("[알림] : 로그인 실패 ( 동일한 회원정보가 없습니다.)");
+						System.err.println("[알림] : 로그인 실패 ( 동일한 회원정보가 없습니다.)");
 					}
 				
 				}
@@ -58,9 +65,9 @@ public class Application {
 					// 객체(여기서는 member)를 매개변수로 괄호안에 안집어넣으면 변수 4개가 따로따로 이동됨.
 					
 					if(result ) {
-						System.out.println("[알림] : 회원가입 성공");
+						System.err.println("[알림] : 회원가입 성공");
 					}else {
-						System.out.println("[알림] : 회원가입 실패");
+						System.err.println("[알림] : 회원가입 실패");
 					}
 					System.out.println("**********************************************");
 					//2. 없다면? 
@@ -112,12 +119,99 @@ public class Application {
 	
 	//2. 회원 메뉴 메소드
 	public static void membermenu(String id) {
-		
+		while(true) {
+			try {
+			System.out.println("\n**************** 회원 메뉴 ***********************");
+			System.out.println("1. 회원정보 2. 커뮤니티 3. 로그아웃");
+			System.out.println("*************************************************");
+			System.out.println("\t\t 선택 : ");	int ch =scanner.nextInt();
+				if(ch==1) {
+					System.out.println("\n**************** 회원 정보 페이지 ******************"); 
+					System.out.println("*************************************************");
+				}
+				if(ch==2) {
+					boardmenu(id); //게시판 메소드 호출
+				}
+				if(ch==3) {
+				System.out.println("[알림] : 로그아웃 되었습니다.");
+				//break; // 가장 가까운 반복문 탈출
+				return; //전체 메소드 리턴[반환] 끝내기
+				}
+			}catch (Exception e) {
+				System.err.println("알림 : 메뉴 페이지 오류 [관리자 문의]"); //err.print 빨간 글씨화(에러 표시하는것)
+				scanner = new Scanner(System.in);
+			}
+		 }
 	}
 								// 인수 : 다른클래스에서 이 메소드를 이용해 구성을 쉽게 바꾸기 위하여. 매개변수를 참조하기 위해 사용.
 	
 	//3. 게시판 메뉴 메소드
 	public static void boardmenu(String id) {
-		
+		while(true) {
+			try {
+				System.out.println("\n**************** 게시판 페이지 ********************");
+				System.out.println("\n번호\t타이틀\t\t작성자\t날짜\t조회수");
+				
+				//게시물 출력
+				int i = 1; //인덱스 값 만들기(게시물 번호 용)
+				//for 반복횟수 i => 게시물 번호
+				for(Board board : BoardController.boardlist) {
+					
+					System.out.println(i + "\t" + board.getTitle() +
+							"\t\t" + board.getWriter() + "\t" + board.getDate() + 
+							"\t" + board.getView());
+					
+					i++;
+				}
+				System.out.println("\n**************** 게시판 페이지 ********************");
+				System.out.println("1. 등록 2. 게시물 상세보기 3. 뒤로가기");
+				System.out.println("*************************************************");
+				System.out.println("\t\t 선택 : ");	int ch =scanner.nextInt();
+				if(ch==1) {
+					System.out.println("\n**************** 게시물 등록 ********************");
+					//입력받기 - > 변수저장 -> 객체 -> 리스트 -> 파일
+						scanner.nextLine(); //next다음에 nextLine오는경우
+					System.out.println(" 제목 : ");	String title = scanner.nextLine();
+					System.out.println(" 내용 : ");	String contents = scanner.nextLine();	
+					
+					Board board = new Board(title, contents, id);
+					BoardController.add(board);
+					
+					System.out.println("*************************************************");
+					
+				}
+				if(ch==2) {
+					System.out.println(" *** 게시물 번호 : "); int index = scanner.nextInt();
+					Board board = BoardController.detail(index-1); //인덱스가 0이기 때문에 -1을 해준다
+					if(board == null) {
+						System.err.println("[알림] : 선택한 게시물 번호가 존재하지 않습니다.");
+					}else {
+						System.out.println("\n****************** 게시물 상세 ********************");
+						System.out.println(" 제목 : " + board.getTitle());
+						System.out.println(" 내용 : " + board.getContents());
+						System.out.println(" 작성자 : " + board.getWriter());
+						System.out.println(" 작성일 : " + board.getDate());
+						System.out.println(" 조회수 : " + board.getView());
+						System.out.println("\n********************* 댓글 **********************");
+						System.out.println("작성자\t댓글\t\t작성일");
+						for(Reply reply : board.getReplylist()) {
+							System.out.println("작성자\t댓글내용\t\t작성일");
+							
+						}
+						System.out.println("1. 댓글쓰기"); int ch2 = scanner.nextInt();
+					}
+					
+				return; //전체 메소드 리턴[반환] 끝내기
+				}
+				if( ch == 3 ) {
+					return; // 현재 메소드 리턴[반환] 끝내기 
+				}
+			}
+				catch (Exception e) {
+				System.err.println("알림 : 메뉴 페이지 오류 [관리자 문의]"); //err.print 빨간 글씨화(에러 표시하는것)
+				scanner = new Scanner(System.in);
+			}
+			
+		 }
 	}
 }

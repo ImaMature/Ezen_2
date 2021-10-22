@@ -1,4 +1,1 @@
-aaaa,1234,qq,a@a,0
-bbbb,1234,kim,fnakdl@n,0
-qaqa,1234,aa,sjehepcprk@naver.com,0
-aaa1,1234,am,w@w,0
+aaaa,1234,22sa,2@2,0

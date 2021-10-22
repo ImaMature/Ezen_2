@@ -17,6 +17,7 @@ MVC패턴 : 역할 분담된 클래스
 		메인메뉴에서 멤버컨트롤러를 통해서 데이타 파일이 있느지 없는지 확인
 
 3. 클래스 설계 [필드, 생성자, 메소드]
+
 	* Member
 		필드 : field : id, password, name, email, point
 		생성자 : 빈 생성자1, 전체 생성자1
@@ -29,8 +30,21 @@ MVC패턴 : 역할 분담된 클래스
 	* MemberController
 		필드 : (배열 or 컬렉션) Arraylist<Member> memberlist
 		메소드 : login, signup, forgotid, forgotpassword, logout, info, update, delete
+		
+	* Board
+		필드 : no, title, contents, writer, date, view, Arraylist(Reply>
+	 
+	* Reply
+		필드 : bno, contents, writer, date
+	 	
+	* BoardController
+		메소드 : add, detail, update, delete
+	
+	* ReplyController
+		메소드 : add	
+		 	
 
 [코드]
 1. JAVA 새프로젝트 생성 [JDK1.8]
 2. 패키지 구성
-3. 
+3. 뼈대[클래스 선언 · 멤버 선언 ]
