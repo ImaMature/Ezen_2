@@ -198,7 +198,7 @@ public class Application {
 						System.out.println("\n********************* ´ñ±Û **********************");
 						System.out.println("ÀÛ¼ºÀÚ\t´ñ±Û\t\tÀÛ¼ºÀÏ");
 						
-						//´ñ±Û ¤©Ãâ·Â
+						//´ñ±Û Ãâ·Â
 						for(Reply reply : board.getReplylist()) {
 							
 							System.out.println(reply.getWriter() + "\t" + reply.getContents() +"\t\t" + 
